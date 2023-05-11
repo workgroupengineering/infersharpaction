@@ -5,6 +5,8 @@
 
 set -e
 
+echo "start"
+
 # Check if we have enough arguments.
 if [ "$#" -lt 2 ]; then
     echo "run_infersharp.sh <dll_folder_path> <github_sarif> <options - see https://fbinfer.com/docs/man-infer-run#OPTIONS>"
@@ -29,8 +31,8 @@ if [ "$#" -gt 2 ]; then
     done
 fi
 
-echo "infer_args {$infer_args}"
-echo "Processing {$1}"
+echo "infer_args: $infer_args"
+echo "Processing.... {$1}"
 # Preparation
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
