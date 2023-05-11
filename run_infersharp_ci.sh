@@ -6,15 +6,16 @@
 set -e
 
 # Check if we have enough arguments.
-if [ "$#" -lt 1 ]; then
-    echo "run_infersharp.sh <dll_folder_path> <options - see https://fbinfer.com/docs/man-infer-run#OPTIONS>"
+if [ "$#" -lt 2 ]; then
+    echo "run_infersharp.sh <dll_folder_path> <github_sarif> <options - see https://fbinfer.com/docs/man-infer-run#OPTIONS>"
 	exit
 fi
 
 infer_args=""
+github_sarif=$2
 
-if [ "$#" -gt 1 ]; then
-    i=2
+if [ "$#" -gt 2 ]; then
+    i=3
     while [ $i -le $# ]
     do 		
         if [ ${!i} == "--output-folder" ]; then
@@ -48,5 +49,9 @@ if [ "$output_folder" != "" ]; then
     fi
 
     cp infer-out/report.sarif infer-out/report.txt $output_folder/
+    if [ ${github_sarif,,} == 'true' ]; then
+        ## Replace "startColumn": 0 with "startColumn": 1
+        sed -i.backup 's/\"startColumn\":0/\"startColumn\":1/g' $output_folder/report.sarif
+    fi
     echo -e "\nFull reports available at '$output_folder'\n"
 fi
