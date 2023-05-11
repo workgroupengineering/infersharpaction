@@ -15,6 +15,7 @@ infer_args=""
 github_sarif=$2
 
 if [ "$#" -gt 2 ]; then
+    echo "enter"
     i=3
     while [ $i -le $# ]
     do 		
@@ -28,6 +29,7 @@ if [ "$#" -gt 2 ]; then
     done
 fi
 
+echo "infer_args {$infer_args}"
 echo "Processing {$1}"
 # Preparation
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
